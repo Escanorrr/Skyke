@@ -234,10 +234,12 @@ class WelcomeController extends GetxController
               .then((value) async {
             if (value.user != null) {
               print('userrrrrrrrrrrrrr is logged in');
+
               // FirebaseAuth.instance.currentUser?.updatePassword('$password');
-              // value.user?.updateDisplayName('$firstName $lastName');
-              FirebaseAuth.instance.currentUser
+
+              await FirebaseAuth.instance.currentUser
                   ?.updateDisplayName('$firstName $lastName');
+              print(FirebaseAuth.instance.currentUser?.displayName);
             } else {
               print('user is not logged in');
             }
