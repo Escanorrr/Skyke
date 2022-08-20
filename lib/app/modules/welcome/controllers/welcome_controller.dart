@@ -221,7 +221,7 @@ class WelcomeController extends GetxController
 
   void gotoOTP() {
     OTPController?.forward();
-    // verifyPhoneNumber();
+    verifyPhoneNumber();
     print('chercking strings $password $firstName $lastName');
   }
 

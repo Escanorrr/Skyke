@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class UpperContainer extends GetView<WelcomeController> {
+class UpperContainer extends StatelessWidget {
   /// Here is your constructor
   UpperContainer();
 
@@ -14,11 +15,11 @@ class UpperContainer extends GetView<WelcomeController> {
 
   Widget _buildUpperContainer(BuildContext context) {
     return AnimatedBuilder(
-      animation: controller.animeController!,
+      animation: Get.find<WelcomeController>().animeController!,
       builder: (BuildContext context, _) {
         return Container(
           height: (MediaQuery.of(context).size.height / 3) -
-              ((controller.tweenanimation?.value *
+              ((Get.find<WelcomeController>().tweenanimation?.value *
                       (MediaQuery.of(context).size.height / 3)) /
                   100),
         );

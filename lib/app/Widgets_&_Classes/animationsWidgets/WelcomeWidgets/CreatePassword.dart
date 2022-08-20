@@ -1,12 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class CreatePassword extends GetView<WelcomeController> {
+class CreatePassword extends StatelessWidget {
   /// Here is your constructor
   CreatePassword();
 
@@ -16,7 +14,7 @@ class CreatePassword extends GetView<WelcomeController> {
   }
 
   Widget _buildCreatePassword(BuildContext context) {
-    var phoneNumber = controller.phoneNumber;
+    var phoneNumber = Get.find<WelcomeController>().phoneNumber;
     var passwordController = TextEditingController();
     var checkBoxValue = false.obs;
     return Container(
@@ -149,8 +147,9 @@ class CreatePassword extends GetView<WelcomeController> {
                   ),
                 ),
                 onPressed: () {
-                  controller.password = passwordController.text;
-                  controller.gotoAddName();
+                  Get.find<WelcomeController>().password =
+                      passwordController.text;
+                  Get.find<WelcomeController>().gotoAddName();
                 },
               ),
             ),

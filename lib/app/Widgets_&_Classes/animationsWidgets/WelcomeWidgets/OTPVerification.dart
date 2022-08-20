@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class OTPVerification extends GetView<WelcomeController> {
+class OTPVerification extends StatelessWidget {
   /// Here is your constructor
   OTPVerification();
 
@@ -18,7 +19,7 @@ class OTPVerification extends GetView<WelcomeController> {
 
   Widget _buildOTPVerification(BuildContext context) {
     //oussama ak tchouf
-    var phoneNumber = controller.phoneNumber;
+    var phoneNumber = Get.find<WelcomeController>().phoneNumber;
     return Container(
         padding: EdgeInsets.only(left: 30, right: 30),
         width: MediaQuery.of(context).size.width,
@@ -59,7 +60,8 @@ class OTPVerification extends GetView<WelcomeController> {
                 try {
                   await FirebaseAuth.instance
                       .signInWithCredential(PhoneAuthProvider.credential(
-                    verificationId: controller.verificationCode!,
+                    verificationId:
+                        Get.find<WelcomeController>().verificationCode!,
                     smsCode: pin,
                   ))
                       .then((value) async {

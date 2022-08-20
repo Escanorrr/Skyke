@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import 'package:tinycolor2/tinycolor2.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class SignInMenu extends GetView<WelcomeController> {
+class SignInMenu extends StatelessWidget {
   /// Here is your constructor
   SignInMenu();
 
@@ -76,7 +78,7 @@ class SignInMenu extends GetView<WelcomeController> {
               ),
               GestureDetector(
                 onTap: () {
-                  controller.createaccount();
+                  Get.find<WelcomeController>().createaccount();
                 },
                 child: Text(
                   'Create one!',

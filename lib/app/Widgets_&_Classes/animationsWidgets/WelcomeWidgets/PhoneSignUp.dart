@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class PhoneSignUp extends GetView<WelcomeController> {
+class PhoneSignUp extends StatelessWidget {
   /// Here is your constructor
   PhoneSignUp();
 
@@ -63,7 +64,8 @@ class PhoneSignUp extends GetView<WelcomeController> {
               ),
               onChanged: (phone) {
                 print(phone.completeNumber);
-                controller.phoneNumber = phone.completeNumber;
+                Get.find<WelcomeController>().phoneNumber =
+                    phone.completeNumber;
               },
             ),
           ),
@@ -80,7 +82,7 @@ class PhoneSignUp extends GetView<WelcomeController> {
               ),
               onPressed: () {
                 //go to otp wigdet with controller
-                controller.gotoCreatePassword();
+                Get.find<WelcomeController>().gotoCreatePassword();
               },
             ),
           ),

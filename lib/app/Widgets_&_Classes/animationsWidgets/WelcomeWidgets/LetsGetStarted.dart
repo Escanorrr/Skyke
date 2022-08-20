@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:tinycolor2/tinycolor2.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class LetsGetStarted extends GetView<WelcomeController> {
+class LetsGetStarted extends StatelessWidget {
   /// Here is your constructor
   LetsGetStarted();
 
@@ -15,18 +15,21 @@ class LetsGetStarted extends GetView<WelcomeController> {
 
   Widget _buildLetsGetStarted(BuildContext context) {
     return AnimatedBuilder(
-      animation: controller.stackController!,
+      animation: Get.find<WelcomeController>().stackController!,
       builder: (BuildContext context, _) {
         return Positioned(
             // height: 0,
             child: Opacity(
-          opacity: (controller.stacktween?.value / 100) *
-              ((150 - controller.logocontainertween?.value) / 150) *
+          opacity: (Get.find<WelcomeController>().stacktween?.value / 100) *
+              ((150 - Get.find<WelcomeController>().logocontainertween?.value) /
+                  150) *
               1,
           child: Container(
             // color: Colors.white,
             height: ((MediaQuery.of(context).size.height / 3) * 2) *
-                (150 - controller.logocontainertween?.value / 150),
+                (150 -
+                    Get.find<WelcomeController>().logocontainertween?.value /
+                        150),
             width: MediaQuery.of(context).size.width,
             alignment: Alignment.topCenter,
             child: Column(
@@ -55,7 +58,7 @@ class LetsGetStarted extends GetView<WelcomeController> {
                         style: TextStyle(fontSize: 20)),
                     onPressed: () {
                       print("in pressed funct");
-                      controller.signin();
+                      Get.find<WelcomeController>().signin();
                       // controller.onClick();
                       //Get.toNamed('/home');
                     },

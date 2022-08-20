@@ -1,10 +1,11 @@
 import 'package:animator/animator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class Logo extends GetView<WelcomeController> {
+class Logo extends StatelessWidget {
   /// Here is your constructor
   Logo();
 
@@ -15,12 +16,12 @@ class Logo extends GetView<WelcomeController> {
 
   Widget _buildLogo(BuildContext context) {
     return AnimatedBuilder(
-      animation: controller.signinController!,
+      animation: Get.find<WelcomeController>().signinController!,
       builder: (BuildContext context, _) {
         return Container(
           // color: Colors.green,
           height: (MediaQuery.of(context).size.height / 3) -
-              (controller.logocontainertween?.value),
+              (Get.find<WelcomeController>().logocontainertween?.value),
           child: Center(
             child:
                 //make an animated logo that contains an image that pops up with animator
@@ -33,8 +34,10 @@ class Logo extends GetView<WelcomeController> {
               builder: (context, AnimatorState, child) => Center(
                 child: Container(
                   // color: Colors.red,
-                  height: AnimatorState.value - (controller.logotween?.value),
-                  width: AnimatorState.value - (controller.logotween?.value),
+                  height: AnimatorState.value -
+                      (Get.find<WelcomeController>().logotween?.value),
+                  width: AnimatorState.value -
+                      (Get.find<WelcomeController>().logotween?.value),
                   child:
                       Image.asset('assets/images/logo.png', fit: BoxFit.fill),
                 ),

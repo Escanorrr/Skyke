@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class Welcome extends GetView<WelcomeController> {
+class Welcome extends StatelessWidget {
   /// Here is your constructor
   Welcome();
 
@@ -22,7 +23,9 @@ class Welcome extends GetView<WelcomeController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            height: (controller.tweenanimation?.value / 100) * 40,
+            height:
+                (Get.find<WelcomeController>().tweenanimation?.value / 100) *
+                    40,
           ),
           Container(
             child: Text(
@@ -55,21 +58,30 @@ class Welcome extends GetView<WelcomeController> {
             ),
           ),
           SizedBox(
-            height: (controller.tweenanimation?.value / 100) * 250,
+            height:
+                (Get.find<WelcomeController>().tweenanimation?.value / 100) *
+                    250,
           ),
           Container(
             child: SizedBox(
-              width: (controller.tweenanimation?.value / 100) * 250,
-              height: (controller.tweenanimation?.value / 100) * 45,
+              width:
+                  (Get.find<WelcomeController>().tweenanimation?.value / 100) *
+                      250,
+              height:
+                  (Get.find<WelcomeController>().tweenanimation?.value / 100) *
+                      45,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(shape: StadiumBorder()),
                 child: Text('Let\'s go',
                     style: TextStyle(
-                        fontSize:
-                            (controller.tweenanimation?.value / 100) * 20)),
+                        fontSize: (Get.find<WelcomeController>()
+                                    .tweenanimation
+                                    ?.value /
+                                100) *
+                            20)),
                 onPressed: () {
-                  controller.onClick();
-                  controller.welcomestack();
+                  Get.find<WelcomeController>().onClick();
+                  Get.find<WelcomeController>().welcomestack();
                   //Get.toNamed('/home');
                 },
               ),

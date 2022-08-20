@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class AddName extends GetView<WelcomeController> {
+class AddName extends StatelessWidget {
   /// Here is your constructor
   AddName();
 
@@ -16,7 +16,7 @@ class AddName extends GetView<WelcomeController> {
   }
 
   Widget _buildAddName(BuildContext context) {
-    var phoneNumber = controller.phoneNumber;
+    var phoneNumber = Get.find<WelcomeController>().phoneNumber;
     var firstnameController = TextEditingController();
     var lastnameController = TextEditingController();
     return Container(
@@ -133,9 +133,11 @@ class AddName extends GetView<WelcomeController> {
                 ),
                 onPressed: () {
                   // controller.password = passwordController.text;
-                  controller.firstName = firstnameController.text;
-                  controller.lastName = lastnameController.text;
-                  controller.gotoOTP();
+                  Get.find<WelcomeController>().firstName =
+                      firstnameController.text;
+                  Get.find<WelcomeController>().lastName =
+                      lastnameController.text;
+                  Get.find<WelcomeController>().gotoOTP();
                 },
               ),
             ),
