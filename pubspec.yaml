@@ -1,0 +1,39 @@
+name: skype_clone
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.17.3 <3.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  url_launcher: ^6.1.4
+  glass: ^1.0.1+1
+  get: 4.6.5
+  dio: ^4.0.6
+  page_transition: ^2.0.9
+  animator: ^3.2.0
+  simple_animations: ^5.0.0+2
+  supercharged: ^2.1.1
+  tinycolor2: ^2.1.0
+  timeline: ^0.0.1
+  firebase_auth: 2.0.0
+  firebase_core: ^1.20.1
+  firebase_messaging: ^12.0.2
+  intl_phone_field: ^3.0.1
+  pinput: ^2.2.12
+
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  lints: 2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+
+  assets:
+    - assets/images/
