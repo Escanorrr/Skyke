@@ -22,6 +22,15 @@ class WelcomeController extends GetxController
   String? firstName;
   String? lastName;
 
+  var passwordController = TextEditingController();
+  var checkBoxValue = false.obs;
+
+  var firstnameController = TextEditingController();
+  var lastnameController = TextEditingController();
+
+  var showfirst = false.obs;
+  final count = 0.obs;
+
   AnimationController? animeController;
   AnimationController? stackController;
   AnimationController? signinController;
@@ -44,9 +53,6 @@ class WelcomeController extends GetxController
   // Animation<TimelineValue<AnimeProps>?>? generalAnimation;
   // MovieTween? signinmovie;
   final bool2 = MovieTweenProperty<double>();
-
-  var showfirst = true.obs;
-  final count = 0.obs;
 
   @override
   void onInit() async {
@@ -221,7 +227,7 @@ class WelcomeController extends GetxController
 
   void gotoOTP() {
     OTPController?.forward();
-    verifyPhoneNumber();
+    //verifyPhoneNumber();
     print('chercking strings $password $firstName $lastName');
   }
 

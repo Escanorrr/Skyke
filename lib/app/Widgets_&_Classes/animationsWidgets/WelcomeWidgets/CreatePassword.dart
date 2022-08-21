@@ -14,9 +14,6 @@ class CreatePassword extends StatelessWidget {
   }
 
   Widget _buildCreatePassword(BuildContext context) {
-    var phoneNumber = Get.find<WelcomeController>().phoneNumber;
-    var passwordController = TextEditingController();
-    var checkBoxValue = false.obs;
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30),
       width: MediaQuery.of(context).size.width,
@@ -43,7 +40,7 @@ class CreatePassword extends StatelessWidget {
                   },
                 ),
                 Text(
-                  '$phoneNumber',
+                  Get.find<WelcomeController>().phoneNumber.toString(),
                   style: TextStyle(
                     fontSize: 18,
                     // fontWeight: FontWeight.bold,
@@ -82,8 +79,8 @@ class CreatePassword extends StatelessWidget {
               height: 60,
               width: MediaQuery.of(context).size.width - 50,
               child: TextField(
-                controller: passwordController,
-                obscureText: checkBoxValue.value,
+                controller: Get.find<WelcomeController>().passwordController,
+                obscureText: Get.find<WelcomeController>().checkBoxValue.value,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   hintText: 'Create password',
@@ -105,9 +102,10 @@ class CreatePassword extends StatelessWidget {
               Obx(() => Checkbox(
                     // checkColor: Colors.blue,
                     activeColor: Colors.blue,
-                    value: checkBoxValue.value,
+                    value: Get.find<WelcomeController>().checkBoxValue.value,
                     onChanged: (bool? value) {
-                      checkBoxValue.value = value!;
+                      Get.find<WelcomeController>().checkBoxValue.value =
+                          value!;
                     },
                   )),
               Text(
@@ -148,7 +146,7 @@ class CreatePassword extends StatelessWidget {
                 ),
                 onPressed: () {
                   Get.find<WelcomeController>().password =
-                      passwordController.text;
+                      Get.find<WelcomeController>().passwordController.text;
                   Get.find<WelcomeController>().gotoAddName();
                 },
               ),

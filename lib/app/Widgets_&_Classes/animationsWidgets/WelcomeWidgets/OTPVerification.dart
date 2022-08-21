@@ -18,8 +18,6 @@ class OTPVerification extends StatelessWidget {
   }
 
   Widget _buildOTPVerification(BuildContext context) {
-    //oussama ak tchouf
-    var phoneNumber = Get.find<WelcomeController>().phoneNumber;
     return Container(
         padding: EdgeInsets.only(left: 30, right: 30),
         width: MediaQuery.of(context).size.width,
@@ -31,7 +29,16 @@ class OTPVerification extends StatelessWidget {
             ),
             Container(
               child: Text(
-                'OTP Verification $phoneNumber',
+                'OTP Verification ',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              child: Text(
+                Get.find<WelcomeController>().phoneNumber.toString(),
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
