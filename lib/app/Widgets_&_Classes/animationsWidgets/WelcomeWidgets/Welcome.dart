@@ -5,16 +5,16 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class Welcome extends StatelessWidget {
-  /// Here is your constructor
-  Welcome();
+class Welcome extends StatefulWidget {
+  const Welcome({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return _buildWelcome(context);
-  }
+  State<Welcome> createState() => _WelcomeState();
+}
 
-  Widget _buildWelcome(BuildContext context) {
+class _WelcomeState extends State<Welcome> {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.topCenter,
