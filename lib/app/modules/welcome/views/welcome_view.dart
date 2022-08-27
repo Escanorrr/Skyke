@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:skype_clone/app/Widgets_&_Classes/animationsWidgets/WelcomeWidgets/AddName.dart';
-import 'package:skype_clone/app/Widgets_&_Classes/animationsWidgets/WelcomeWidgets/CreatePassword.dart';
-import 'package:skype_clone/app/Widgets_&_Classes/animationsWidgets/WelcomeWidgets/OTPVerification.dart';
-
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/LetsGetStarted.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/Logo.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/PhoneSignUp.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/SignInBackground.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/SignInMenu.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/UpperContainer.dart';
-import '../../../Widgets_&_Classes/animationsWidgets/WelcomeWidgets/Welcome.dart';
 
 import '../controllers/welcome_controller.dart';
+import '../widgets/phoneSignUp/AddName.dart';
+import '../widgets/phoneSignUp/CreatePassword.dart';
+import '../widgets/LetsGetStarted.dart';
+import '../widgets/Logo.dart';
+import '../widgets/phoneSignUp/OTPVerification.dart';
+import '../widgets/phoneSignUp/PhoneSignUp.dart';
+import '../widgets/SignInMenu.dart';
+import '../widgets/UpperContainer.dart';
+import '../widgets/Welcome.dart';
+import '../widgets/SignInBackground.dart';
+import '../widgets/signInOptions.dart';
 
 class WelcomeView extends GetView<WelcomeController> {
   @override
@@ -35,7 +35,8 @@ class WelcomeView extends GetView<WelcomeController> {
             controller.phoneSignUpController,
             controller.createPasswordController,
             controller.addNameController,
-            controller.OTPController
+            controller.OTPController,
+            controller.signInOptionsController,
           ]),
           builder: (BuildContext context, _) {
             return Column(
@@ -82,23 +83,55 @@ class WelcomeView extends GetView<WelcomeController> {
                                         //fix movie tween or make new tween
                                         duration: Duration(milliseconds: 300),
                                         right:
-                                            (controller.booltween2?.value != 1
+                                            (controller.signInMenutween
+                                                        ?.value !=
+                                                    1
                                                 ? -MediaQuery.of(context)
                                                     .size
                                                     .height
                                                 : 0),
                                         child: Opacity(
-                                            opacity:
-                                                (controller.booltween3?.value /
+                                            opacity: controller.phoneSignUptween
+                                                        ?.value >
+                                                    controller
+                                                        .signInOptionstween
+                                                        ?.value
+                                                ? ((controller.phoneSignUptween
+                                                                ?.value /
                                                             100 -
                                                         1) *
-                                                    -1,
+                                                    -1)
+                                                : ((controller.signInOptionstween
+                                                                ?.value /
+                                                            100 -
+                                                        1) *
+                                                    -1),
                                             child: SignInMenu())),
                                     AnimatedPositioned(
                                         duration: Duration(milliseconds: 300),
+                                        right: (controller.signInOptionstween
+                                                    ?.value !=
+                                                100
+                                            ? -MediaQuery.of(context)
+                                                .size
+                                                .height
+                                            : 0),
+                                        child: signInOptions()),
+                                    //fix animated opacity khiir
+                                    AnimatedOpacity(
+                                        opacity: controller
+                                                .signInOptionstween?.value /
+                                            100,
+                                        duration: Duration(milliseconds: 300),
+                                        child: signInOptions()),
+                                    AnimatedPositioned(
+                                        duration: Duration(milliseconds: 300),
                                         right:
-                                            (controller.booltween3?.value != 100
-                                                ? -MediaQuery.of(context)
+                                            (controller.phoneSignUptween
+                                                        ?.value !=
+                                                    100
+                                                ? -MediaQuery.of(
+                                                        context)
                                                     .size
                                                     .height
                                                 : 0),

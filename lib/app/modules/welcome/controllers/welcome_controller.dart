@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, non_constant_identifier_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -5,12 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:simple_animations/simple_animations.dart';
-
-// enum AnimeProps {
-//   logocontainertween,
-//   logotween,
-//   booltween,
-// }
 
 class WelcomeController extends GetxController
     with GetTickerProviderStateMixin {
@@ -22,15 +18,6 @@ class WelcomeController extends GetxController
   String? firstName;
   String? lastName;
 
-  var passwordController = TextEditingController();
-  var checkBoxValue = false.obs;
-
-  var firstnameController = TextEditingController();
-  var lastnameController = TextEditingController();
-
-  var showfirst = false.obs;
-  final count = 0.obs;
-
   AnimationController? animeController;
   AnimationController? stackController;
   AnimationController? signinController;
@@ -38,21 +25,26 @@ class WelcomeController extends GetxController
   AnimationController? createPasswordController;
   AnimationController? addNameController;
   AnimationController? OTPController;
+  AnimationController? signInOptionsController;
 
   Animation? tweenanimation;
   Animation? stacktween;
   Animation? logocontainertween;
   Animation? logotween;
   Animation? booltween;
-  Animation? booltween2;
-  Animation? booltween3;
+  Animation? signInMenutween;
+  Animation? phoneSignUptween;
   Animation? createPasswordtween;
   Animation? addNametween;
   Animation? OTPtween;
+  Animation? signInOptionstween;
 
   // Animation<TimelineValue<AnimeProps>?>? generalAnimation;
   // MovieTween? signinmovie;
   final bool2 = MovieTweenProperty<double>();
+
+  var showfirst = true.obs;
+  final count = 0.obs;
 
   @override
   void onInit() async {
@@ -88,8 +80,16 @@ class WelcomeController extends GetxController
       duration: Duration(milliseconds: 300),
       vsync: this,
     );
+    signInOptionsController = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
 
-    ///Now the animations
+    //Now the animations
+    //
+    //
+    //
+    //
 
     tweenanimation = Tween(begin: 0.0, end: 100.0).animate(new CurvedAnimation(
       parent: animeController!,
@@ -102,20 +102,6 @@ class WelcomeController extends GetxController
         curve: Curves.easeInOut,
       ),
     );
-
-    // generalAnimation = TimelineTween()
-    //         .addScene(
-    //           begin: 0.milliseconds,
-    //           end: 1000.milliseconds,
-    //           curve: Curves.ease,
-    //         )
-    //         .animate(AnimeProps.logocontainertween,
-    //             tween: Tween(begin: 0.0, end: 150.0))
-    //         .animate(AnimeProps.logotween, tween: Tween(begin: 0.0, end: 40.0))
-    //         .animate(AnimeProps.booltween, tween: Tween(begin: 0.0, end: 1.0))
-    //         .parent
-    //         .animatedBy(signinController!)
-    //     as Animation<TimelineValue<AnimeProps>?>?;
 
     logocontainertween =
         Tween<double>(begin: 0, end: 150).animate(new CurvedAnimation(
@@ -143,7 +129,8 @@ class WelcomeController extends GetxController
       ),
     ));
 
-    booltween2 = Tween<double>(begin: 0, end: 1).animate(new CurvedAnimation(
+    signInMenutween =
+        Tween<double>(begin: 0, end: 1).animate(new CurvedAnimation(
       parent: signinController!,
       curve: Interval(
         0.75,
@@ -153,7 +140,8 @@ class WelcomeController extends GetxController
     ));
 
     //new controller for phone sign up animation
-    booltween3 = Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
+    phoneSignUptween =
+        Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
       parent: phoneSignUpController!,
       curve: Interval(
         0,
@@ -190,6 +178,16 @@ class WelcomeController extends GetxController
         curve: Curves.ease,
       ),
     ));
+    signInOptionstween = Tween<double>(begin: 0, end: 100).animate(
+      new CurvedAnimation(
+        parent: signInOptionsController!,
+        curve: Interval(
+          0,
+          1,
+          curve: Curves.ease,
+        ),
+      ),
+    );
 
     Future.delayed(Duration(milliseconds: 1000), () {
       animeController?.forward();
@@ -227,8 +225,12 @@ class WelcomeController extends GetxController
 
   void gotoOTP() {
     OTPController?.forward();
-    //verifyPhoneNumber();
+    // verifyPhoneNumber();
     print('chercking strings $password $firstName $lastName');
+  }
+
+  void gotoSignInOptions() {
+    signInOptionsController?.forward();
   }
 
   void verifyPhoneNumber() async {
@@ -240,12 +242,10 @@ class WelcomeController extends GetxController
               .then((value) async {
             if (value.user != null) {
               print('userrrrrrrrrrrrrr is logged in');
-
               // FirebaseAuth.instance.currentUser?.updatePassword('$password');
-
-              await FirebaseAuth.instance.currentUser
+              // value.user?.updateDisplayName('$firstName $lastName');
+              FirebaseAuth.instance.currentUser
                   ?.updateDisplayName('$firstName $lastName');
-              print(FirebaseAuth.instance.currentUser?.displayName);
             } else {
               print('user is not logged in');
             }
