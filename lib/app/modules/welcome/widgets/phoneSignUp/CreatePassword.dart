@@ -4,19 +4,15 @@ import 'package:get/get.dart';
 
 import '../../controllers/welcome_controller.dart';
 
-class CreatePassword extends GetView<WelcomeController> {
-  /// Here is your constructor
-  CreatePassword();
-
+class CreatePassword extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return _buildCreatePassword(context);
-  }
+  var controller = Get.find<WelcomeController>();
 
-  Widget _buildCreatePassword(BuildContext context) {
+  Widget build(BuildContext context) {
     var phoneNumber = controller.phoneNumber;
     var passwordController = TextEditingController();
     var checkBoxValue = false.obs;
+
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30),
       width: MediaQuery.of(context).size.width,
@@ -39,7 +35,10 @@ class CreatePassword extends GetView<WelcomeController> {
                   // alignment: Alignment.centerLeft,
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    //reverse the current controller to the previous screen
+                    controller.switchCreatePasswordBool();
+                    Future.delayed(Duration(milliseconds: 300), () {
+                      controller.switchPhoneSignUpOpacity();
+                    });
                   },
                 ),
                 Text(

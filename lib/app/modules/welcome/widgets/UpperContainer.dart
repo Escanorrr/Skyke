@@ -1,18 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class UpperContainer extends GetView<WelcomeController> {
-  /// Here is your constructor
-  UpperContainer();
-
+class UpperContainer extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildUpperContainer(context);
-  }
-
-  Widget _buildUpperContainer(BuildContext context) {
     return AnimatedBuilder(
       animation: controller.animeController!,
       builder: (BuildContext context, _) {

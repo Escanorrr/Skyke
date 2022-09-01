@@ -18,14 +18,26 @@ class WelcomeController extends GetxController
   String? firstName;
   String? lastName;
 
+  var signInMenuOpacity = 1.obs;
+
+  var signInOptionsBool = false.obs;
+  var signInOptionsOpacity = 1.obs;
+
+  var phoneSignUpBool = false.obs;
+  var phoneSignUpOpacity = 1.obs;
+
+  var createPasswordBool = false.obs;
+  var createPasswordOpacity = 1.obs;
+
+  var addNameBool = false.obs;
+  var addNameOpacity = 1.obs;
+
+  var OTPVerificationBool = false.obs;
+  var OTPVerificationOpacity = 1.obs;
+
   AnimationController? animeController;
   AnimationController? stackController;
   AnimationController? signinController;
-  AnimationController? phoneSignUpController;
-  AnimationController? createPasswordController;
-  AnimationController? addNameController;
-  AnimationController? OTPController;
-  AnimationController? signInOptionsController;
 
   Animation? tweenanimation;
   Animation? stacktween;
@@ -33,11 +45,6 @@ class WelcomeController extends GetxController
   Animation? logotween;
   Animation? booltween;
   Animation? signInMenutween;
-  Animation? phoneSignUptween;
-  Animation? createPasswordtween;
-  Animation? addNametween;
-  Animation? OTPtween;
-  Animation? signInOptionstween;
 
   // Animation<TimelineValue<AnimeProps>?>? generalAnimation;
   // MovieTween? signinmovie;
@@ -62,26 +69,6 @@ class WelcomeController extends GetxController
 
     signinController = AnimationController(
       duration: Duration(milliseconds: 600),
-      vsync: this,
-    );
-    phoneSignUpController = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    createPasswordController = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    addNameController = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    OTPController = AnimationController(
-      duration: Duration(milliseconds: 300),
-      vsync: this,
-    );
-    signInOptionsController = AnimationController(
-      duration: Duration(milliseconds: 300),
       vsync: this,
     );
 
@@ -139,56 +126,6 @@ class WelcomeController extends GetxController
       ),
     ));
 
-    //new controller for phone sign up animation
-    phoneSignUptween =
-        Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
-      parent: phoneSignUpController!,
-      curve: Interval(
-        0,
-        1,
-        curve: Curves.ease,
-      ),
-    ));
-
-    createPasswordtween =
-        Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
-      parent: createPasswordController!,
-      curve: Interval(
-        0,
-        1,
-        curve: Curves.ease,
-      ),
-    ));
-
-    addNametween =
-        Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
-      parent: addNameController!,
-      curve: Interval(
-        0,
-        1,
-        curve: Curves.ease,
-      ),
-    ));
-
-    OTPtween = Tween<double>(begin: 0, end: 100).animate(new CurvedAnimation(
-      parent: OTPController!,
-      curve: Interval(
-        0,
-        1,
-        curve: Curves.ease,
-      ),
-    ));
-    signInOptionstween = Tween<double>(begin: 0, end: 100).animate(
-      new CurvedAnimation(
-        parent: signInOptionsController!,
-        curve: Interval(
-          0,
-          1,
-          curve: Curves.ease,
-        ),
-      ),
-    );
-
     Future.delayed(Duration(milliseconds: 1000), () {
       animeController?.forward();
     });
@@ -198,39 +135,151 @@ class WelcomeController extends GetxController
     showfirst.value = !showfirst.value;
   }
 
+  double TweenPercentage(double tweenValue, int max, double height) {
+    return (tweenValue / max) * height;
+  }
+
   void welcomestack() {
     Future.delayed(Duration(milliseconds: 1000), () {
       stackController?.forward();
     });
   }
 
-  void signin() {
+  void gotoPhoneSignInMenu() {
     Future.delayed(Duration(milliseconds: 1000), () {
       signinController?.forward();
       print(logocontainertween?.value);
     });
   }
 
-  void createaccount() {
-    phoneSignUpController?.forward();
+  void switchSignInMenuOpacity() {
+    if (signInMenuOpacity.value == 0) {
+      signInMenuOpacity.value = 1;
+    } else {
+      signInMenuOpacity.value = 0;
+    }
+  }
+
+  void gotoPhoneSignUp() {
+    //phoneSignUpController?.forward();
+    switchSignInMenuOpacity();
+    //print(signInMenuOpacity);
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchPhoneSignUpBool();
+    });
+  }
+
+  void switchPhoneSignUpOpacity() {
+    if (phoneSignUpOpacity.value == 0) {
+      phoneSignUpOpacity.value = 1;
+    } else {
+      phoneSignUpOpacity.value = 0;
+    }
+  }
+
+  void switchPhoneSignUpBool() {
+    if (phoneSignUpBool.value == false) {
+      phoneSignUpBool.value = true;
+    } else {
+      phoneSignUpBool.value = false;
+    }
   }
 
   void gotoCreatePassword() {
-    createPasswordController?.forward();
+    //createPasswordController?.forward();
+    switchPhoneSignUpOpacity();
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchCreatePasswordBool();
+    });
+  }
+
+  void switchCreatePasswordBool() {
+    if (createPasswordBool.value == false) {
+      createPasswordBool.value = true;
+    } else {
+      createPasswordBool.value = false;
+    }
+  }
+
+  void switchCreatePasswordOpacity() {
+    if (createPasswordOpacity.value == 0) {
+      createPasswordOpacity.value = 1;
+    } else {
+      createPasswordOpacity.value = 0;
+    }
   }
 
   void gotoAddName() {
-    addNameController?.forward();
+    //addNameController?.forward();
+    switchCreatePasswordOpacity();
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchAddNameBool();
+    });
   }
 
-  void gotoOTP() {
-    OTPController?.forward();
-    // verifyPhoneNumber();
+  void switchAddNameBool() {
+    if (addNameBool.value == false) {
+      addNameBool.value = true;
+    } else {
+      addNameBool.value = false;
+    }
+  }
+
+  void switchAddNameOpacity() {
+    if (addNameOpacity.value == 0) {
+      addNameOpacity.value = 1;
+    } else {
+      addNameOpacity.value = 0;
+    }
+  }
+
+  void gotoOTPVerification() {
+    switchAddNameOpacity();
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchOTPVerificationBool();
+    });
+    //verifyPhoneNumber();
     print('chercking strings $password $firstName $lastName');
   }
 
+  void switchOTPVerificationBool() {
+    if (OTPVerificationBool.value == false) {
+      OTPVerificationBool.value = true;
+    } else {
+      OTPVerificationBool.value = false;
+    }
+  }
+
+  void switchOTPVerificationOpacity() {
+    if (OTPVerificationOpacity.value == 0) {
+      OTPVerificationOpacity.value = 1;
+    } else {
+      OTPVerificationOpacity.value = 0;
+    }
+  }
+
   void gotoSignInOptions() {
-    signInOptionsController?.forward();
+    switchSignInMenuOpacity();
+
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchSignInOptionsBool();
+    });
+  }
+
+  void switchSignInOptionsBool() {
+    if (signInOptionsBool.value == false) {
+      signInOptionsBool.value = true;
+    } else {
+      signInOptionsBool.value = false;
+    }
+  }
+
+  void switchSignInOptionsOpacity() {
+    if (signInOptionsOpacity.value == 0) {
+      signInOptionsOpacity.value = 1;
+    } else {
+      signInOptionsOpacity.value = 0;
+    }
   }
 
   void verifyPhoneNumber() async {
@@ -265,6 +314,15 @@ class WelcomeController extends GetxController
         timeout: Duration(seconds: 60));
   }
 
+  bool exitWidgets() {
+    if (stackController?.isCompleted == true) {
+      stackController?.reverse();
+      showfirst.value = !showfirst.value;
+    }
+
+    //it always returns false to not exit the app entirely
+    return false;
+  }
   //create an onclick function that changes the value of the showfirst variable
 
   void dispose() {

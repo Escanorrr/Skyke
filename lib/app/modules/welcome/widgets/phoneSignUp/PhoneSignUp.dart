@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:tinycolor2/tinycolor2.dart';
@@ -6,16 +8,10 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../controllers/welcome_controller.dart';
 
-class PhoneSignUp extends GetView<WelcomeController> {
-  /// Here is your constructor
-  PhoneSignUp();
-
+class PhoneSignUp extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildPhoneSignUp(context);
-  }
-
-  Widget _buildPhoneSignUp(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30),
       width: MediaQuery.of(context).size.width,
@@ -69,20 +65,53 @@ class PhoneSignUp extends GetView<WelcomeController> {
           SizedBox(
             height: 90,
           ),
-          SizedBox(
-            height: 60,
-            child: RaisedButton(
-              color: Theme.of(context).cardColor.darken(13),
-              elevation: 1,
-              child: Text(
-                'Next',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width / 3,
+                child: RaisedButton(
+                  color: Theme.of(context).cardColor.darken(15),
+                  child: Text(
+                    'Back',
+                  ),
+                  onPressed: () {
+                    controller.switchPhoneSignUpBool();
+                    Future.delayed(Duration(milliseconds: 300), () {
+                      controller.switchSignInMenuOpacity();
+                    });
+                  },
+                ),
               ),
-              onPressed: () {
-                //go to otp wigdet with controller
-                controller.gotoCreatePassword();
-              },
-            ),
+              Container(
+                width: MediaQuery.of(context).size.width / 3,
+                child: RaisedButton(
+                  color: Colors.blue,
+                  child: Text(
+                    'Next',
+                  ),
+                  onPressed: () {
+                    controller.gotoCreatePassword();
+                  },
+                ),
+              ),
+            ],
           ),
+
+          // SizedBox(
+          //   height: 60,
+          //   child: RaisedButton(
+          //     color: Theme.of(context).cardColor.darken(13),
+          //     elevation: 1,
+          //     child: Text(
+          //       'Next',
+          //     ),
+          //     onPressed: () {
+          //       //go to otp wigdet with controller
+          //
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

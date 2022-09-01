@@ -3,21 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 class SignInBackground extends StatelessWidget {
-  /// Here is your constructor
-  SignInBackground();
-
   @override
   Widget build(BuildContext context) {
     return _buildSignInBackground(context);
   }
 
   Widget _buildSignInBackground(BuildContext context) {
+    var signInBackgroungHeight = (MediaQuery.of(context).size.height / 3 * 2 +
+        ((MediaQuery.of(context).size.height / 3) -
+            ((MediaQuery.of(context).size.height / 3) - 150)));
     return Container(
       color: TinyColor(Theme.of(context).cardColor).darken(12).color,
       width: MediaQuery.of(context).size.width,
-      height: (MediaQuery.of(context).size.height / 3 * 2 +
-          ((MediaQuery.of(context).size.height / 3) -
-              ((MediaQuery.of(context).size.height / 3) - 150))),
+      height: signInBackgroungHeight,
       // color: Colors.yellow,
       alignment: Alignment.topLeft,
       child: Column(

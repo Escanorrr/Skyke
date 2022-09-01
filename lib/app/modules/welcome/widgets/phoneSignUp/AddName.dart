@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 import '../../controllers/welcome_controller.dart';
 
-class AddName extends GetView<WelcomeController> {
-  /// Here is your constructor
-  AddName();
-
+class AddName extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildAddName(context);
-  }
-
-  Widget _buildAddName(BuildContext context) {
     var phoneNumber = controller.phoneNumber;
     var firstnameController = TextEditingController();
     var lastnameController = TextEditingController();
@@ -40,6 +36,10 @@ class AddName extends GetView<WelcomeController> {
                   // alignment: Alignment.centerLeft,
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
+                    controller.switchAddNameBool();
+                    Future.delayed(Duration(milliseconds: 300), () {
+                      controller.switchCreatePasswordOpacity();
+                    });
                     //reverse the current controller to the previous screen
                   },
                 ),
@@ -134,7 +134,7 @@ class AddName extends GetView<WelcomeController> {
                   // controller.password = passwordController.text;
                   controller.firstName = firstnameController.text;
                   controller.lastName = lastnameController.text;
-                  controller.gotoOTP();
+                  controller.gotoOTPVerification();
                 },
               ),
             ),

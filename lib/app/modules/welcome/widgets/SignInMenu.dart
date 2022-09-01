@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class SignInMenu extends GetView<WelcomeController> {
-  /// Here is your constructor
-  SignInMenu();
-
+class SignInMenu extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildSignInMenu(context);
-  }
-
-  Widget _buildSignInMenu(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 30, right: 30),
       width: MediaQuery.of(context).size.width,
@@ -76,7 +72,7 @@ class SignInMenu extends GetView<WelcomeController> {
               ),
               GestureDetector(
                 onTap: () {
-                  controller.createaccount();
+                  controller.gotoPhoneSignUp();
                 },
                 child: Text(
                   'Create one!',
@@ -102,12 +98,10 @@ class SignInMenu extends GetView<WelcomeController> {
                   color: Theme.of(context).cardColor.darken(15),
                   child: Text(
                     'Back',
-                    // style: TextStyle(
-                    //   color: Colors
-                    //       .white,
-                    // ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.signinController?.reverse();
+                  },
                 ),
               ),
               Container(
@@ -116,9 +110,6 @@ class SignInMenu extends GetView<WelcomeController> {
                   color: Colors.blue,
                   child: Text(
                     'Next',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
                   ),
                   onPressed: () {},
                 ),
@@ -133,8 +124,8 @@ class SignInMenu extends GetView<WelcomeController> {
           SizedBox(
             height: 60,
             child: RaisedButton(
-              color: Theme.of(context).cardColor.darken(13),
-              elevation: 1,
+              color: TinyColor(Theme.of(context).cardColor).color,
+              elevation: 0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[

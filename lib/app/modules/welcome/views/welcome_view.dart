@@ -18,6 +18,8 @@ import '../widgets/signInOptions.dart';
 class WelcomeView extends GetView<WelcomeController> {
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var oneThirdofScreenHeight = screenHeight / 3;
     return WillPopScope(
       onWillPop: () async {
         if (controller.stackController?.isCompleted == true) {
@@ -32,11 +34,6 @@ class WelcomeView extends GetView<WelcomeController> {
           animation: Listenable.merge([
             controller.signinController,
             controller.animeController,
-            controller.phoneSignUpController,
-            controller.createPasswordController,
-            controller.addNameController,
-            controller.OTPController,
-            controller.signInOptionsController,
           ]),
           builder: (BuildContext context, _) {
             return Column(
@@ -47,14 +44,14 @@ class WelcomeView extends GetView<WelcomeController> {
                   return Container(
                       // color: Colors.blueGrey,
                       alignment: Alignment.topCenter,
-                      height: (MediaQuery.of(context).size.height / 3) +
-                          ((controller.tweenanimation?.value *
-                                  (MediaQuery.of(context).size.height / 3)) /
-                              100) +
+                      height: (oneThirdofScreenHeight) +
+                          controller.TweenPercentage(
+                              controller.tweenanimation?.value,
+                              100,
+                              oneThirdofScreenHeight) +
                           (controller.logocontainertween?.value *
-                              ((MediaQuery.of(context).size.height / 3) -
-                                  ((MediaQuery.of(context).size.height / 3) -
-                                      150)) /
+                              ((oneThirdofScreenHeight) -
+                                  ((oneThirdofScreenHeight) - 150)) /
                               150),
                       child: Opacity(
                           opacity: controller.tweenanimation?.value / 100,
@@ -64,10 +61,8 @@ class WelcomeView extends GetView<WelcomeController> {
                                 duration: Duration(milliseconds: 300),
                                 top: controller.showfirst.value
                                     ? 0
-                                    //(MediaQuery.of(context).size.height / 3)
-                                    : -((MediaQuery.of(context).size.height /
-                                            3) *
-                                        2),
+                                    //(oneThirdofScreenHeight)
+                                    : -((screenHeight / 3) * 2),
                                 child: Welcome(),
                               ),
                               LetsGetStarted(),
@@ -75,110 +70,135 @@ class WelcomeView extends GetView<WelcomeController> {
                               AnimatedPositioned(
                                   duration: Duration(milliseconds: 300),
                                   bottom: (controller.booltween?.value != 1
-                                      ? -MediaQuery.of(context).size.height
+                                      ? -screenHeight
                                       : 0),
-                                  child: Stack(children: <Widget>[
-                                    SignInBackground(),
-                                    AnimatedPositioned(
-                                        //fix movie tween or make new tween
-                                        duration: Duration(milliseconds: 300),
-                                        right:
-                                            (controller.signInMenutween
-                                                        ?.value !=
-                                                    1
-                                                ? -MediaQuery.of(context)
-                                                    .size
-                                                    .height
+                                  child: Stack(
+                                      // fit: StackFit.,
+                                      children: <Widget>[
+                                        SignInBackground(),
+                                        AnimatedPositioned(
+                                          //fix movie tween or make new tween
+                                          duration: Duration(milliseconds: 300),
+                                          right: (controller
+                                                      .signInMenutween?.value !=
+                                                  1
+                                              ? -screenHeight
+                                              : 0),
+                                          child: AnimatedOpacity(
+                                              opacity: controller
+                                                  .signInMenuOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                          .signInMenuOpacity
+                                                          .value !=
+                                                      1),
+                                                  child: SignInMenu())),
+                                        ),
+                                        AnimatedPositioned(
+                                          duration: Duration(milliseconds: 300),
+                                          right: (controller.signInOptionsBool
+                                                      .value !=
+                                                  true
+                                              ? -screenHeight
+                                              : 0),
+                                          child: AnimatedOpacity(
+                                              //gets effected with the next widget pls add later
+                                              opacity: controller
+                                                  .signInOptionsOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                          .signInOptionsOpacity
+                                                          .value !=
+                                                      1),
+                                                  child: signInOptions())),
+                                        ),
+                                        AnimatedPositioned(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            right: (controller.phoneSignUpBool
+                                                        .value !=
+                                                    true
+                                                ? -screenHeight
                                                 : 0),
-                                        child: Opacity(
-                                            opacity: controller.phoneSignUptween
-                                                        ?.value >
-                                                    controller
-                                                        .signInOptionstween
-                                                        ?.value
-                                                ? ((controller.phoneSignUptween
-                                                                ?.value /
-                                                            100 -
-                                                        1) *
-                                                    -1)
-                                                : ((controller.signInOptionstween
-                                                                ?.value /
-                                                            100 -
-                                                        1) *
-                                                    -1),
-                                            child: SignInMenu())),
-                                    AnimatedPositioned(
-                                        duration: Duration(milliseconds: 300),
-                                        right: (controller.signInOptionstween
-                                                    ?.value !=
-                                                100
-                                            ? -MediaQuery.of(context)
-                                                .size
-                                                .height
-                                            : 0),
-                                        child: signInOptions()),
-                                    //fix animated opacity khiir
-                                    AnimatedOpacity(
-                                        opacity: controller
-                                                .signInOptionstween?.value /
-                                            100,
-                                        duration: Duration(milliseconds: 300),
-                                        child: signInOptions()),
-                                    AnimatedPositioned(
-                                        duration: Duration(milliseconds: 300),
-                                        right:
-                                            (controller.phoneSignUptween
-                                                        ?.value !=
-                                                    100
-                                                ? -MediaQuery.of(
-                                                        context)
-                                                    .size
-                                                    .height
-                                                : 0),
-                                        child: Opacity(
-                                            opacity: (controller
-                                                            .createPasswordtween
-                                                            ?.value /
-                                                        100 -
-                                                    1) *
-                                                -1,
-                                            child: PhoneSignUp())),
-                                    AnimatedPositioned(
-                                      duration: Duration(milliseconds: 300),
-                                      right: (controller
-                                                  .createPasswordtween?.value !=
-                                              100
-                                          ? -MediaQuery.of(context).size.height
-                                          : 0),
-                                      child: Opacity(
-                                          opacity:
-                                              (controller.addNametween?.value /
-                                                          100 -
-                                                      1) *
-                                                  -1,
-                                          child: CreatePassword()),
-                                    ),
-                                    AnimatedPositioned(
-                                      duration: Duration(milliseconds: 300),
-                                      right: (controller.addNametween?.value !=
-                                              100
-                                          ? -MediaQuery.of(context).size.height
-                                          : 0),
-                                      child: Opacity(
-                                          opacity: (controller.OTPtween?.value /
-                                                      100 -
-                                                  1) *
-                                              -1,
-                                          child: AddName()),
-                                    ),
-                                    AnimatedPositioned(
-                                      duration: Duration(milliseconds: 300),
-                                      right: (controller.OTPtween?.value != 100
-                                          ? -MediaQuery.of(context).size.height
-                                          : 0),
-                                      child: OTPVerification(),
-                                    )
-                                  ])),
+                                            child: AnimatedOpacity(
+                                                opacity: controller
+                                                    .phoneSignUpOpacity.value
+                                                    .toDouble(),
+                                                duration:
+                                                    Duration(milliseconds: 300),
+                                                child: IgnorePointer(
+                                                    ignoring: (controller
+                                                            .phoneSignUpOpacity
+                                                            .value !=
+                                                        1),
+                                                    child: PhoneSignUp()))),
+                                        AnimatedPositioned(
+                                          duration: Duration(milliseconds: 300),
+                                          right: (controller.createPasswordBool
+                                                      .value !=
+                                                  true
+                                              ? -screenHeight
+                                              : 0),
+                                          child: AnimatedOpacity(
+                                              opacity: controller
+                                                  .createPasswordOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                          .createPasswordOpacity
+                                                          .value !=
+                                                      1),
+                                                  child: CreatePassword())),
+                                        ),
+                                        AnimatedPositioned(
+                                          duration: Duration(milliseconds: 300),
+                                          right:
+                                              (controller.addNameBool.value !=
+                                                      true
+                                                  ? -screenHeight
+                                                  : 0),
+                                          child: AnimatedOpacity(
+                                              opacity: controller
+                                                  .addNameOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                          .addNameOpacity
+                                                          .value !=
+                                                      1),
+                                                  child: AddName())),
+                                        ),
+                                        AnimatedPositioned(
+                                          duration: Duration(milliseconds: 300),
+                                          right: (controller.OTPVerificationBool
+                                                      .value !=
+                                                  true
+                                              ? -screenHeight
+                                              : 0),
+                                          child: AnimatedOpacity(
+                                              opacity: controller
+                                                  .OTPVerificationOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                          .OTPVerificationOpacity
+                                                          .value !=
+                                                      1),
+                                                  child: OTPVerification())),
+                                        )
+                                      ])),
                             ],
                           ))
                       //create a column with three containers two for text and last one for button

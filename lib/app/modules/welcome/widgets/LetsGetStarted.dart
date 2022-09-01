@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:tinycolor2/tinycolor2.dart';
-
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class LetsGetStarted extends GetView<WelcomeController> {
-  /// Here is your constructor
-  LetsGetStarted();
-
+class LetsGetStarted extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildLetsGetStarted(context);
-  }
-
-  Widget _buildLetsGetStarted(BuildContext context) {
     return AnimatedBuilder(
       animation: controller.stackController!,
       builder: (BuildContext context, _) {
@@ -55,7 +49,7 @@ class LetsGetStarted extends GetView<WelcomeController> {
                         style: TextStyle(fontSize: 20)),
                     onPressed: () {
                       print("in pressed funct");
-                      controller.signin();
+                      controller.gotoPhoneSignInMenu();
                       // controller.onClick();
                       //Get.toNamed('/home');
                     },

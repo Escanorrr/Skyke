@@ -1,19 +1,13 @@
 import 'package:animator/animator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class Logo extends GetView<WelcomeController> {
-  /// Here is your constructor
-  Logo();
-
+class Logo extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildLogo(context);
-  }
-
-  Widget _buildLogo(BuildContext context) {
     return AnimatedBuilder(
       animation: controller.signinController!,
       builder: (BuildContext context, _) {

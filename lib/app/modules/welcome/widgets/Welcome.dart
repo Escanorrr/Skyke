@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../../modules/welcome/controllers/welcome_controller.dart';
 
-class Welcome extends GetView<WelcomeController> {
-  /// Here is your constructor
-  Welcome();
-
+class Welcome extends StatelessWidget {
+  var controller = Get.find<WelcomeController>();
   @override
   Widget build(BuildContext context) {
-    return _buildWelcome(context);
-  }
-
-  Widget _buildWelcome(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.topCenter,
