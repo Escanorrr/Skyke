@@ -314,16 +314,49 @@ class WelcomeController extends GetxController
         timeout: Duration(seconds: 60));
   }
 
-  bool exitWidgets() {
-    if (stackController?.isCompleted == true) {
-      stackController?.reverse();
-      showfirst.value = !showfirst.value;
+  void exitWidgets() {
+    if (addNameOpacity.value == 0) {
+      switchOTPVerificationBool();
+      Future.delayed(Duration(milliseconds: 300), () {
+        switchAddNameOpacity();
+      });
+    } else {
+      if (createPasswordOpacity.value == 0) {
+        switchAddNameBool();
+        Future.delayed(Duration(milliseconds: 300), () {
+          switchCreatePasswordOpacity();
+        });
+      } else {
+        if (phoneSignUpOpacity.value == 0) {
+          switchCreatePasswordBool();
+          Future.delayed(Duration(milliseconds: 300), () {
+            switchPhoneSignUpOpacity();
+          });
+        } else {
+          if (signInMenuOpacity.value == 0) {
+            if (phoneSignUpBool.value == true) {
+              switchPhoneSignUpBool();
+            }
+            if (signInOptionsBool.value == true) {
+              switchSignInOptionsBool();
+            }
+            Future.delayed(Duration(milliseconds: 300), () {
+              switchSignInMenuOpacity();
+            });
+          } else {
+            if (signinController?.isCompleted == true) {
+              signinController?.reverse();
+            } else {
+              if (stackController?.isCompleted == true) {
+                stackController?.reverse();
+                showfirst.value = !showfirst.value;
+              }
+            }
+          }
+        }
+      }
     }
-
-    //it always returns false to not exit the app entirely
-    return false;
   }
-  //create an onclick function that changes the value of the showfirst variable
 
   void dispose() {
     super.dispose();

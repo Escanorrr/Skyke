@@ -22,10 +22,7 @@ class WelcomeView extends GetView<WelcomeController> {
     var oneThirdofScreenHeight = screenHeight / 3;
     return WillPopScope(
       onWillPop: () async {
-        if (controller.stackController?.isCompleted == true) {
-          controller.stackController?.reverse();
-          controller.showfirst.value = !controller.showfirst.value;
-        }
+        controller.exitWidgets();
         return false;
       },
       child: Scaffold(

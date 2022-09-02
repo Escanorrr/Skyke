@@ -147,7 +147,7 @@ class OTPVerification extends StatelessWidget {
                   TextSpan(
                     text: 'Next',
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   TextSpan(text: ' means that you agree to the '),
@@ -169,7 +169,29 @@ class OTPVerification extends StatelessWidget {
                   TextSpan(text: '.'),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: MediaQuery.of(context).size.width / 3,
+                child: RaisedButton(
+                  color: Colors.blue,
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    // enter the main screen
+                  },
+                ),
+              ),
+            ),
           ],
         ));
   }
