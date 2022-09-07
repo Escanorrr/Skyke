@@ -1,12 +1,15 @@
 // ignore_for_file: unnecessary_new, non_constant_identifier_names
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:simple_animations/simple_animations.dart';
+
+import '../../../routes/app_pages.dart';
 
 class WelcomeController extends GetxController
     with GetTickerProviderStateMixin {
@@ -238,7 +241,7 @@ class WelcomeController extends GetxController
     Future.delayed(Duration(milliseconds: 300), () {
       switchOTPVerificationBool();
     });
-    //verifyPhoneNumber();
+    verifyPhoneNumber();
     print('chercking strings $password $firstName $lastName');
   }
 
@@ -290,11 +293,8 @@ class WelcomeController extends GetxController
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              print('userrrrrrrrrrrrrr is logged in');
-              // FirebaseAuth.instance.currentUser?.updatePassword('$password');
-              // value.user?.updateDisplayName('$firstName $lastName');
-              FirebaseAuth.instance.currentUser
-                  ?.updateDisplayName('$firstName $lastName');
+              addUser();
+              Get.offAllNamed(Routes.HOME);
             } else {
               print('user is not logged in');
             }
@@ -312,6 +312,28 @@ class WelcomeController extends GetxController
           print(verificationCode);
         },
         timeout: Duration(seconds: 60));
+  }
+
+  void addUser() async {
+    DatabaseReference database = FirebaseDatabase(
+            databaseURL:
+                "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
+        .ref();
+    DatabaseReference usersdb = database.child('/users');
+
+    await usersdb
+        .push()
+        .set({
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': phoneNumber,
+          'password': password,
+        })
+        .then((_) => print("user has been added successfully!!!"))
+        .catchError((error) =>
+            print("user has not been added for this error : $error"));
+
+    print("we crossed adding");
   }
 
   void exitWidgets() {

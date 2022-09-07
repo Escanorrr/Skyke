@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
+import '../../../../routes/app_pages.dart';
 import '../../controllers/welcome_controller.dart';
 
 class OTPVerification extends StatelessWidget {
@@ -102,6 +104,8 @@ class OTPVerification extends StatelessWidget {
                   ))
                       .then((value) async {
                     if (value.user != null) {
+                      controller.addUser();
+                      Get.offAllNamed(Routes.HOME);
                       print("pass to home");
                     }
                   });

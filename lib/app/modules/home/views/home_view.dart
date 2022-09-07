@@ -5,31 +5,66 @@ import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
 import 'package:animator/animator.dart';
 
+import '../widgets/Calls.dart';
+import '../widgets/Chats.dart';
+import '../widgets/Contacts.dart';
+import '../widgets/Notifications.dart';
+
 class HomeView extends GetView<HomeController> {
+  // final String title;
+  // final String message;
+  //
+  // HomeView(this.title, this.message);
   @override
   Widget build(BuildContext context) {
+    var fullName = controller.getName();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child:
-            //make an animated logo that contains an image that pops up with animator
-            Animator<double>(
-          duration: Duration(seconds: 2),
-          tween: Tween<double>(begin: 0.0, end: 100.0),
-          curve: Curves.easeInOut,
-          repeats: 1,
-          cycles: 3,
-          builder: (context, AnimatorState, child) => Center(
-            child: Container(
-              height: AnimatorState.value,
-              width: AnimatorState.value,
-              child: Image.asset('assets/images/logo.png', fit: BoxFit.fill),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(65),
+        child: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.blue.shade800,
+              size: 50,
+            ),
+            onPressed: () {},
+          ),
+          leadingWidth: 50,
+          title: Container(
+            padding: EdgeInsets.only(top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$fullName',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Share what you\'re up to',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 17,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
+      body: PageView(
+        controller: controller.pageViewController,
+        children: [
+          Chats(),
+          Calls(),
+          Contacts(),
+          Notifications(),
+        ],
       ),
     );
   }
