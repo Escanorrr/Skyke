@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  var fullname = ''.obs;
   //TODO: Implement HomeController
   final PageController pageViewController = PageController(
     initialPage: 0,
@@ -12,24 +13,20 @@ class HomeController extends GetxController {
             databaseURL:
                 "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
         .ref();
-    DatabaseReference riyadFirstName =
-        database.child('/users/-NBOA_w8F3uw3WdjMs_5/firstName');
-    DatabaseEvent firstevent = await riyadFirstName.once();
+    DatabaseReference riyadName = database.child('/users/-NBOA_w8F3uw3WdjMs_5');
+    DatabaseEvent event = await riyadName.once();
 
-    DatabaseReference riyadSecondName =
-        database.child('/users/-NBOA_w8F3uw3WdjMs_5/secondName');
-    DatabaseEvent secondevent = await riyadSecondName.once();
+    String firstName = event.snapshot.child("firstName").value.toString();
+    String lastName = event.snapshot.child("lastName").value.toString();
 
-// Print the data of the snapshot
-    String fullName =
-        await "${firstevent.snapshot.value.toString()} ${secondevent.snapshot.value.toString()}";
-    return fullName;
+    return "$firstName $lastName";
   }
 
   final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    fullname.value = await getName();
   }
 
   @override
