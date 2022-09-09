@@ -27,20 +27,16 @@ class Chats extends StatelessWidget {
                 Icons.search,
                 color: Colors.grey,
               ),
-              suffix: Icon(
+              suffixIcon: Icon(
                 size: 30,
                 Icons.filter_list,
-                color: Colors.red,
+                color: Colors.grey,
               ),
               //fillColor: Colors.red,
               filled: true,
-              contentPadding: EdgeInsets.all(10),
-
+              contentPadding: EdgeInsets.symmetric(vertical: 10),
               hintText: 'Search',
             ),
-            minLines: null,
-            maxLines: null,
-            expands: true,
           ),
         ),
       ),

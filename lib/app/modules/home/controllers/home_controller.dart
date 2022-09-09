@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var fullname = ''.obs;
-  //TODO: Implement HomeController
+  var currentIndex = 0.obs;
   final PageController pageViewController = PageController(
     initialPage: 0,
   );
+
   Future<String> getName() async {
     DatabaseReference database = FirebaseDatabase(
             databaseURL:
@@ -27,6 +28,13 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     fullname.value = await getName();
+  }
+
+  void changeIndex(int index) {
+    currentIndex.value = index;
+    pageViewController.animateToPage(index,
+        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    print("index: $index");
   }
 
   @override
