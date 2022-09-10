@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 import '../controllers/home_controller.dart';
 import 'package:animator/animator.dart';
@@ -81,20 +82,36 @@ class HomeView extends GetView<HomeController> {
         onPageChanged: (index) => controller.currentIndex(index),
       ),
       bottomNavigationBar: Obx(() {
-        return SizedBox(
+        return Container(
+          margin: const EdgeInsets.only(top: 6.0),
+          decoration: BoxDecoration(
+            //elevation: 10,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black,
+                //offset: Offset(0, 1), //(x,y)
+                blurRadius: 5,
+                spreadRadius: 0.5,
+              ),
+            ],
+            border: Border(
+              top: BorderSide(
+                color: Colors.grey.shade400.withOpacity(0.7),
+                width: 0.5,
+                style: BorderStyle.values[1],
+              ),
+            ),
+          ),
           height: 60,
           child: BottomNavigationBar(
-            elevation: 10,
-
             type: BottomNavigationBarType.shifting, // Fixed
             fixedColor: Colors.lightBlueAccent,
-
             //fixedColor: Colors.purple,
             currentIndex: controller.currentIndex.value,
             onTap: (index) => controller.changeIndex(index),
             items: [
               BottomNavigationBarItem(
-                backgroundColor: Colors.blue,
+                //backgroundColor: Theme.of(context).primaryColor,
                 icon: Icon(
                   Icons.chat_bubble_outline,
                   color: Colors.grey,
