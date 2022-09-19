@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:tinycolor2/tinycolor2.dart';
-
 import '../controllers/home_controller.dart';
-import 'package:animator/animator.dart';
 
 import '../widgets/Calls.dart';
 import '../widgets/Chats.dart';
