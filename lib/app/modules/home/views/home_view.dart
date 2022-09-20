@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../calls/views/calls_view.dart';
+import '../../chats/views/chats_view.dart';
+import '../../contacts/views/contacts_view.dart';
+import '../../notifications/views/notifications_view.dart';
 import '../controllers/home_controller.dart';
-
-import '../widgets/Calls.dart';
-import '../widgets/Chats.dart';
-import '../widgets/Contacts.dart';
-import '../widgets/Notifications.dart';
 
 class HomeView extends GetView<HomeController> {
   // final String title;
@@ -70,10 +69,10 @@ class HomeView extends GetView<HomeController> {
       body: PageView(
         controller: controller.pageViewController,
         children: [
-          Chats(),
-          Calls(),
-          Contacts(),
-          Notifications(),
+          ChatsView(),
+          CallsView(),
+          ContactsView(),
+          NotificationsView(),
         ],
         onPageChanged: (index) => controller.currentIndex(index),
       ),
@@ -113,7 +112,7 @@ class HomeView extends GetView<HomeController> {
                   color: Colors.grey,
                 ),
                 activeIcon: Icon(
-                  Icons.chat_bubble,
+                  Icons.chat_rounded,
                   color: Colors.lightBlueAccent,
                 ),
                 label: 'Chats',
@@ -131,11 +130,11 @@ class HomeView extends GetView<HomeController> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.person_outline,
+                  Icons.contacts_outlined,
                   color: Colors.grey,
                 ),
                 activeIcon: Icon(
-                  Icons.person,
+                  Icons.contacts_rounded,
                   color: Colors.lightBlueAccent,
                 ),
                 label: 'Contacts',

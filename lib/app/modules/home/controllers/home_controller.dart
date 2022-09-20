@@ -2,6 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../calls/controllers/calls_controller.dart';
+import '../../chats/controllers/chats_controller.dart';
+import '../../contacts/controllers/contacts_controller.dart';
+import '../../notifications/controllers/notifications_controller.dart';
+
 class HomeController extends GetxController {
   var fullname = ''.obs;
   var currentIndex = 0.obs;
@@ -27,6 +32,10 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    Get.put(ChatsController());
+    Get.put(CallsController());
+    Get.put(ContactsController());
+    Get.put(NotificationsController());
     fullname.value = await getName();
   }
 
