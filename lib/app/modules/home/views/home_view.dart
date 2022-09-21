@@ -26,7 +26,10 @@ class HomeView extends GetView<HomeController> {
               color: Colors.blue.shade800,
               size: 50,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed('/sidebar');
+              //Navigator.pushNamed(context, '/sidebar');
+            },
           ),
           leadingWidth: 50,
           title: Container(

@@ -11,6 +11,7 @@ abstract class Routes {
   static const CALLS = _Paths.CALLS;
   static const CONTACTS = _Paths.CONTACTS;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
+  static const SIDEBAR = _Paths.SIDEBAR;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const CALLS = '/calls';
   static const CONTACTS = '/contacts';
   static const NOTIFICATIONS = '/notifications';
+  static const SIDEBAR = '/sidebar';
 }
