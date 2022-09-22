@@ -64,6 +64,7 @@ class AppPages {
       name: _Paths.SIDEBAR,
       page: () => const SidebarView(),
       binding: SidebarBinding(),
+      transition: Transition.downToUp,
     ),
   ];
 }
