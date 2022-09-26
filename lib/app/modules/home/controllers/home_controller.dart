@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -15,17 +16,17 @@ class HomeController extends GetxController {
   );
 
   Future<String> getName() async {
-    DatabaseReference database = FirebaseDatabase(
-            databaseURL:
-                "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
-        .ref();
-    DatabaseReference riyadName = database.child('/users/-NBOA_w8F3uw3WdjMs_5');
-    DatabaseEvent event = await riyadName.once();
+    String firstName = '';
+    String lastName = '';
+    await FirebaseFirestore.instance.collection('users').doc("zUQosiqTva6KUSbVk4S8").get().then((value) {
+      print(value.data());
+      firstName = value.data()!['firstName'];
+      lastName = value.data()!['lastName'];
+      print("$firstName 66666666666666666666666666666566656565");
 
-    String firstName = event.snapshot.child("firstName").value.toString();
-    String lastName = event.snapshot.child("lastName").value.toString();
-
+    });
     return "$firstName $lastName";
+
   }
 
   final count = 0.obs;

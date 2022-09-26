@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_new, non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -315,15 +316,17 @@ class WelcomeController extends GetxController
   }
 
   void addUser() async {
-    DatabaseReference database = FirebaseDatabase(
-            databaseURL:
-                "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
-        .ref();
-    DatabaseReference usersdb = database.child('/users');
+    // DatabaseReference database = FirebaseDatabase(
+    //         databaseURL:
+    //             "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
+    //     .ref();
+    // DatabaseReference usersdb = database.child('/users');
+    final usersdb = FirebaseFirestore.instance.collection('users').doc();
 
     await usersdb
-        .push()
+
         .set({
+          'id': usersdb.id,
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': phoneNumber,

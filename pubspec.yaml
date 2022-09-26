@@ -23,6 +23,7 @@ dependencies:
   intl_phone_field: ^3.0.1
   pinput: ^2.2.12
   firebase_database: ^9.1.2
+  cloud_firestore: ^3.4.9
 
   flutter: 
     sdk: flutter
