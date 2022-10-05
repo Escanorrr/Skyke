@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,7 @@ class HomeController extends GetxController {
   Future<String> getName() async {
     String firstName = '';
     String lastName = '';
-    await FirebaseFirestore.instance.collection('users').doc("zUQosiqTva6KUSbVk4S8").get().then((value) {
+    await FirebaseFirestore.instance.collection('users').doc("user1").get().then((value) {
       print(value.data());
       firstName = value.data()!['firstName'];
       lastName = value.data()!['lastName'];
