@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/welcome_controller.dart';
+import '../widgets/SignInEmailCode.dart';
 import '../widgets/phoneSignUp/AddName.dart';
 import '../widgets/phoneSignUp/CreatePassword.dart';
 import '../widgets/LetsGetStarted.dart';
@@ -93,6 +94,27 @@ class WelcomeView extends GetView<WelcomeController> {
                                                           .value !=
                                                       1),
                                                   child: SignInMenu())),
+                                        ),
+                                        AnimatedPositioned(
+                                          duration: Duration(milliseconds: 300),
+                                          right: (controller.signInEmailCodeBool
+                                              .value !=
+                                              true
+                                              ? -screenHeight
+                                              : 0),
+                                          child: AnimatedOpacity(
+                                            //gets effected with the next widget pls add later
+                                              opacity: controller
+                                                  .signInEmailCodeOpacity.value
+                                                  .toDouble(),
+                                              duration:
+                                              Duration(milliseconds: 300),
+                                              child: IgnorePointer(
+                                                  ignoring: (controller
+                                                      .signInEmailCodeOpacity
+                                                      .value !=
+                                                      1),
+                                                  child: SignInEmailCode())),
                                         ),
                                         AnimatedPositioned(
                                           duration: Duration(milliseconds: 300),

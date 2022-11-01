@@ -21,7 +21,7 @@ class HomeController extends GetxController {
       print(value.data());
       firstName = value.data()!['firstName'];
       lastName = value.data()!['lastName'];
-      print("$firstName 66666666666666666666666666666566656565");
+      print("just loaded the full name for $firstName ");
 
     });
     return "$firstName $lastName";

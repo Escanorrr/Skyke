@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
+
 import '../controllers/chats_controller.dart';
+import '../widgets/conversations_list_widget.dart';
 
 class ChatsView extends GetView<ChatsController> {
 
@@ -98,70 +100,71 @@ class ChatsView extends GetView<ChatsController> {
                 SizedBox(
                   height: 10,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: 25,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.only(top: 10,left: 7, right: 7),
-                        leading:
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.blue.shade800,
-                          ),
-                          child:
-
-                          Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,),
-                              child: Image.asset('assets/images/logo.png' )),
-                          // Icon(
-                          //   Icons.person,
-                          //   size: 30,
-                          //   color: Colors.white,
-                          // ),
-                        ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'John Doe',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Hello, this is a test message!get',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        trailing: Text(
-                          '12:00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
-                        ),
-
-
-                      );
-                    },
-
-                    //
-                  ),
-                ),
+                ConversationsListWidget(conversationList: controller.conversationsList),
+                // Expanded(
+                //   child: ListView.builder(
+                //     padding: EdgeInsets.only(left: 10, right: 10),
+                //     scrollDirection: Axis.vertical,
+                //     shrinkWrap: true,
+                //     itemCount: 25,
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return ListTile(
+                //         contentPadding: EdgeInsets.only(top: 10,left: 7, right: 7),
+                //         leading:
+                //         Container(
+                //           width: 50,
+                //           height: 50,
+                //           decoration: BoxDecoration(
+                //             shape: BoxShape.circle,
+                //             color: Colors.blue.shade800,
+                //           ),
+                //           child:
+                //
+                //           Container(
+                //               decoration: BoxDecoration(
+                //                 shape: BoxShape.circle,),
+                //               child: Image.asset('assets/images/logo.png' )),
+                //           // Icon(
+                //           //   Icons.person,
+                //           //   size: 30,
+                //           //   color: Colors.white,
+                //           // ),
+                //         ),
+                //         title: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Text(
+                //               'John Doe',
+                //               style: TextStyle(
+                //                 fontSize: 20,
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //             ),
+                //             Text(
+                //               'Hello, this is a test message!get',
+                //               style: TextStyle(
+                //                 fontSize: 18,
+                //                 color: Colors.grey,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //
+                //         trailing: Text(
+                //           '12:00',
+                //           style: TextStyle(
+                //             fontSize: 18,
+                //             color: Colors.grey,
+                //           ),
+                //         ),
+                //
+                //
+                //       );
+                //     },
+                //
+                //     //
+                //   ),
+                // ),
               ],
             ),
             Positioned(

@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,9 @@ class WelcomeController extends GetxController
   String? lastName;
 
   var signInMenuOpacity = 1.obs;
+
+  var signInEmailCodeBool = false.obs;
+  var signInEmailCodeOpacity = 1.obs;
 
   var signInOptionsBool = false.obs;
   var signInOptionsOpacity = 1.obs;
@@ -161,6 +165,29 @@ class WelcomeController extends GetxController
       signInMenuOpacity.value = 1;
     } else {
       signInMenuOpacity.value = 0;
+    }
+  }
+  void gotosignInEmailCode() {
+    //phoneSignUpController?.forward();
+    switchSignInMenuOpacity();
+    //print(signInMenuOpacity);
+    Future.delayed(Duration(milliseconds: 300), () {
+      switchSignInEmailCodeBool();
+    });
+  }
+  void switchSignInEmailCodeOpacity() {
+    if (signInEmailCodeOpacity.value == 0) {
+      signInEmailCodeOpacity.value = 1;
+    } else {
+      signInEmailCodeOpacity.value = 0;
+    }
+  }
+
+  void switchSignInEmailCodeBool() {
+    if (signInEmailCodeBool.value == false) {
+      signInEmailCodeBool.value = true;
+    } else {
+      signInEmailCodeBool.value = false;
     }
   }
 
@@ -316,13 +343,8 @@ class WelcomeController extends GetxController
   }
 
   void addUser() async {
-    // DatabaseReference database = FirebaseDatabase(
-    //         databaseURL:
-    //             "https://skype-clone-c0624-default-rtdb.europe-west1.firebasedatabase.app")
-    //     .ref();
-    // DatabaseReference usersdb = database.child('/users');
     final usersdb = FirebaseFirestore.instance.collection('users').doc();
-
+    //FirebaseAuth.instance.signInWithEmailLink(email: , emailLink: );
     await usersdb
 
         .set({
@@ -364,6 +386,9 @@ class WelcomeController extends GetxController
             }
             if (signInOptionsBool.value == true) {
               switchSignInOptionsBool();
+            }
+            if (signInEmailCodeBool.value == true) {
+              switchSignInEmailCodeBool();
             }
             Future.delayed(Duration(milliseconds: 300), () {
               switchSignInMenuOpacity();

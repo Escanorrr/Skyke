@@ -3,34 +3,28 @@ import 'message_model.dart';
 
 class ConversationModel {
   String? conversationId;
-  int? doctorId;
-  int? patientId;
+  List? chatters;
   MessageModel? lastMessage;
   ConversationInformation? conversationInformation;
 
-  ConversationModel(this.conversationId, this.doctorId, this.patientId, this.lastMessage);
+  ConversationModel(this.conversationId, this.chatters, this.lastMessage);
 
   ConversationModel.fromJson(String conversationId, Map<String, dynamic> json) {
     this.conversationId = conversationId;
-    this.doctorId = json['chatter1ID'];
-    this.patientId = json['chatter2ID'];
+    this.chatters = json['chatters'];
     this.lastMessage = MessageModel.fromJson(json);
     this.conversationInformation = ConversationInformation.fromJson(json);
   }
 }
 
 class ConversationInformation {
-  String? chatter1Image;
-  String? chatter2Image;
-  String? chatter1Name;
-  String? chatter2Name;
+  Map? chattersImages;
+  Map? chattersNames;
 
-  ConversationInformation(this.chatter1Name, this.chatter1Image, this.chatter2Name, this.chatter2Image);
+  ConversationInformation(this.chattersImages, this.chattersNames);
 
   ConversationInformation.fromJson(Map<String, dynamic> json) {
-    this.chatter1Name = json['chatter1Name'];
-    this.chatter1Image = json['chatter1Image'];
-    this.chatter2Name = json['chatter2Name'];
-    this.chatter2Image = json['chatter2Image'];
+    this.chattersImages = json['chattersImages'];
+    this.chattersNames = json['chattersNames'];
   }
 }

@@ -24,6 +24,8 @@ dependencies:
   pinput: ^2.2.12
   firebase_database: ^9.1.2
   cloud_firestore: ^3.4.9
+  timeago: ^3.3.0
+  rxdart: ^0.27.5
 
   flutter: 
     sdk: flutter

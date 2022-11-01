@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart' as dio;
 import 'dart:io';
 import 'package:path/path.dart' as p;
@@ -5,6 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/conversation_model.dart';
@@ -12,12 +15,16 @@ import '../../../models/message_model.dart';
 
 class ChatsController extends GetxController {
   //TODO: Implement ChatsController
-
+  StreamSubscription? chatsStream;
 
 
   final count = 0.obs;
   @override
   void onInit() {
+    chatsStream = getConversationsList()
+        .listen((event) {
+      updateConversations(event);
+    });
     super.onInit();
   }
 
@@ -28,6 +35,10 @@ class ChatsController extends GetxController {
 
   @override
   void onClose() {
+    print('chats stream paused');
+    if (chatsStream != null) {
+      chatsStream?.cancel();
+    }
     super.onClose();
   }
 
@@ -44,12 +55,10 @@ class ChatsController extends GetxController {
     //replace notifyListeners();
   }
 
-  Stream<List<ConversationModel>> getConversationsList(BuildContext context, bool readMessages, String search) {
+  Stream<List<ConversationModel>> getConversationsList() {
     var collection = FirebaseFirestore.instance
         .collection('conversations')
-        .where('chatter1ID', isEqualTo: 'user1')
-        .where('chatter2ID', isEqualTo: 'user1');
-
+        .where("chatters",arrayContains: 'user1');
 
     collection = collection.orderBy('last_message_sent_time', descending: true);
 
@@ -58,6 +67,21 @@ class ChatsController extends GetxController {
         return ConversationModel.fromJson(document.id, document.data());
       }).toList();
     });
+    // var stream = CombineLatestStream.list([
+    //   collection.snapshots(),
+    //   collection2.snapshots(),
+    // ]);
+    // return stream.map((event) {
+    //   List<ConversationModel> convosFromBothSides = [];
+    //   event[0].docs.forEach((document) {
+    //     convosFromBothSides.add(ConversationModel.fromJson(document.id, document.data()));
+    //   });
+    //   event[1].docs.forEach((document) {
+    //     convosFromBothSides.add(ConversationModel.fromJson(document.id, document.data()));
+    //   });
+    //   return convosFromBothSides;
+    // });
+
   }
 
   //messages vars and methods
@@ -125,27 +149,27 @@ class ChatsController extends GetxController {
   }
 
   Future<void> sendMessage(String conversationId, BuildContext context) async {
-    Map<String, Object> last_message_info = {};
+    Map<String, Object?> last_message_info = {};
 
     Timestamp currentTime = Timestamp.fromDate(DateTime.now());
 
     if (attachmentFile != null) {
-      if (p.extension(attachmentFile!.path) == '.png' || p.extension(attachmentFile!.path) == '.jpg') {
-
-        await sendAttachment(context, conversationId, currentTime, 'image', (url) {
-          last_message_info.addAll({
-            'last_message_type': 'image',
-            'last_message_content': url,
-          });
-        });
-      } else {
-        await sendAttachment(context, conversationId, currentTime, 'file', (url) {
-          last_message_info.addAll({
-            'last_message_type': 'file',
-            'last_message_content': url,
-          });
-        });
-      }
+      // if (p.extension(attachmentFile!.path) == '.png' || p.extension(attachmentFile!.path) == '.jpg') {
+      //
+      //   await sendAttachment(context, conversationId, currentTime, 'image', (url) {
+      //     last_message_info.addAll({
+      //       'last_message_type': 'image',
+      //       'last_message_content': url,
+      //     });
+      //   });
+      // } else {
+      //   await sendAttachment(context, conversationId, currentTime, 'file', (url) {
+      //     last_message_info.addAll({
+      //       'last_message_type': 'file',
+      //       'last_message_content': url,
+      //     });
+      //   });
+      // }
     } else {
       if (messageTextController.text != '') {
         FirebaseFirestore.instance.collection('conversations').doc(conversationId).collection('messages').add({
@@ -172,46 +196,46 @@ class ChatsController extends GetxController {
     //replace notifyListeners();
     clearAttachment();
   }
-  Future<void> sendAttachment(BuildContext context, String conversationId, Timestamp currentTime, String type, Function(String url) onSend) async {
-    dio.FormData formData = dio.FormData.fromMap({
-      "media": attachmentFile == null
-          ? null
-          : await dio.MultipartFile.fromFile(attachmentFile.path, filename: "${attachmentFile.path.split('/').last}"),
-    });
-
-    if (!waitingSendAttachment) {
-      _waitingSendAttachment = true;
-      //replace notifyListeners();
-
-      try {
-        ApiResponse response = await Api.post(SendAttachment, formData: formData);
-        if (response.statusCode == 200) {
-          print("send attachment::oooo::${response.statusCode}::${response.successFlag}");
-          if (response.successFlag == true) {
-            FirebaseFirestore.instance.collection('conversations').doc(conversationId).collection('messages').add({
-              'content': '${response.body['url']}',
-              'type': type,
-              'send_by': 'patient',
-              'send_time': currentTime,
-              'seen_time': null,
-            });
-            onSend(response.body['url']);
-          } else {
-            showToast(context, response.message);
-          }
-        } else {
-          print("addToCart::oooo::ERROR::${response.error})");
-          showToast(context, response.message);
-        }
-      } catch (error) {
-        print("addToCart::oooo::ERROR::${error.toString()})");
-        showToast(context, AppConstants.ApiResponseMessages[2]);
-      } finally {
-        _waitingSendAttachment = false;
-        notifyListeners();
-      }
-    }
-  }
+  // Future<void> sendAttachment(BuildContext context, String conversationId, Timestamp currentTime, String type, Function(String url) onSend) async {
+  //   dio.FormData formData = dio.FormData.fromMap({
+  //     "media": attachmentFile == null
+  //         ? null
+  //         : await dio.MultipartFile.fromFile(attachmentFile!.path, filename: "${attachmentFile!.path.split('/').last}"),
+  //   });
+  //
+  //   if (!waitingSendAttachment) {
+  //     _waitingSendAttachment = true;
+  //     //replace notifyListeners();
+  //
+  //     try {
+  //       ApiResponse response = await Api.post(SendAttachment, formData: formData);
+  //       if (response.statusCode == 200) {
+  //         print("send attachment::oooo::${response.statusCode}::${response.successFlag}");
+  //         if (response.successFlag == true) {
+  //           FirebaseFirestore.instance.collection('conversations').doc(conversationId).collection('messages').add({
+  //             'content': '${response.body['url']}',
+  //             'type': type,
+  //             'send_by': 'patient',
+  //             'send_time': currentTime,
+  //             'seen_time': null,
+  //           });
+  //           onSend(response.body['url']);
+  //         } else {
+  //           showToast(context, response.message);
+  //         }
+  //       } else {
+  //         print("addToCart::oooo::ERROR::${response.error})");
+  //         showToast(context, response.message);
+  //       }
+  //     } catch (error) {
+  //       print("addToCart::oooo::ERROR::${error.toString()})");
+  //       showToast(context, AppConstants.ApiResponseMessages[2]);
+  //     } finally {
+  //       _waitingSendAttachment = false;
+  //       notifyListeners();
+  //     }
+  //   }
+  // }
 
 
 

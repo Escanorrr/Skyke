@@ -111,7 +111,7 @@ class SignInMenu extends StatelessWidget {
                   child: Text(
                     'Next',
                   ),
-                  onPressed: () {},
+                  onPressed: () {controller.gotosignInEmailCode();},
                 ),
               ),
             ],
