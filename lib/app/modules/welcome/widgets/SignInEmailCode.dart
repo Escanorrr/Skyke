@@ -146,7 +146,7 @@ class SignInEmailCode extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {controller.validateEmailOTP(emailCodeController.value.text);},
                 ),
               ),
             ],

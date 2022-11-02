@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_new, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_auth/email_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -22,6 +23,7 @@ class WelcomeController extends GetxController
   String? password;
   String? firstName;
   String? lastName;
+  String?  email ;
 
   var signInMenuOpacity = 1.obs;
 
@@ -167,8 +169,9 @@ class WelcomeController extends GetxController
       signInMenuOpacity.value = 0;
     }
   }
-  void gotosignInEmailCode() {
+  void gotosignInEmailCode(String phoneNumber) {
     //phoneSignUpController?.forward();
+    sendEmailCode(phoneNumber);
     switchSignInMenuOpacity();
     //print(signInMenuOpacity);
     Future.delayed(Duration(milliseconds: 300), () {
@@ -311,6 +314,49 @@ class WelcomeController extends GetxController
     } else {
       signInOptionsOpacity.value = 0;
     }
+  }
+
+  void validateEmailOTP(String otp){
+    var validation = (EmailAuth (
+      sessionName: 'Skyke Email Verification',
+    ).validateOtp(
+        recipientMail: email!,
+        userOtp: otp));
+    if (validation){
+      print('Email OTP is valid');
+      Get.offAllNamed(Routes.HOME);
+    }
+    else{
+      print('Email OTP is invalid, repeat the process pls!');
+    }
+  }
+  //create a function that gets a user phone number as a parameter and extracts the email of that phone number then sends an email to that email with a code
+  void sendEmailCode(String phoneNumber) async {
+    //get the email of the phone number
+    String? tempEmail = await getEmail(phoneNumber);
+    //print('tempemail is $tempEmail');
+    if (tempEmail != null) {
+
+      email = tempEmail;
+      EmailAuth (
+        sessionName: 'Skyke Email Verification',
+      ).sendOtp( recipientMail:email!,otpLength: 6);
+    }
+    else {
+      print('email is null');
+    }
+  }
+  //implement getEmail function
+  Future<String?> getEmail(String phoneNumber) async {
+    String? eemail;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where("phoneNumber",isEqualTo: phoneNumber).
+        get().then((value) {
+          print("the email brought is : " + value.docs[0].data()['email']);
+          eemail = value.docs[0].data()['email'];
+        });
+    return eemail;
   }
 
   void verifyPhoneNumber() async {

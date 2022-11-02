@@ -45,14 +45,13 @@ class ChatsController extends GetxController {
   void increment() => count.value++;
 
   //conversation vars and methods
-  List<ConversationModel> _conversationsList = [];
-  List<ConversationModel> get conversationsList {
-    return _conversationsList;
-  }
+  var conversationsList = <ConversationModel>[].obs ;
+
 
   void updateConversations(List<ConversationModel> newConversations) {
-    _conversationsList = newConversations;
+    conversationsList.value = newConversations;
     //replace notifyListeners();
+    update();
   }
 
   Stream<List<ConversationModel>> getConversationsList() {
@@ -93,6 +92,8 @@ class ChatsController extends GetxController {
   void updateConversationMessages(List<MessageModel> newMessages) {
     _conversationsMessagesList = newMessages;
     //replace notifyListeners();
+    update();
+
   }
 
   Stream<List<MessageModel>> getConversationMessages(String conversationId) {
@@ -127,13 +128,15 @@ class ChatsController extends GetxController {
   void changeAttachmentFile(File file) {
     attachmentFile = file;
     messageTextController.text = attachmentFile!.path.substring(attachmentFile!.path.length - 10);
-    //replace notifyListeners();
+    //notifyListeners();
+
   }
 
   void clearAttachment() {
     attachmentFile = null;
     messageTextController.text = '';
     //replace notifyListeners();
+
   }
 
   bool _waitingSendAttachment = false;
@@ -195,6 +198,7 @@ class ChatsController extends GetxController {
     FirebaseFirestore.instance.collection('conversations').doc(conversationId).update(last_message_info);
     //replace notifyListeners();
     clearAttachment();
+
   }
   // Future<void> sendAttachment(BuildContext context, String conversationId, Timestamp currentTime, String type, Function(String url) onSend) async {
   //   dio.FormData formData = dio.FormData.fromMap({

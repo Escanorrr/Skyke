@@ -8,6 +8,7 @@ import '../../../modules/welcome/controllers/welcome_controller.dart';
 
 class SignInMenu extends StatelessWidget {
   var controller = Get.find<WelcomeController>();
+  var loginUsernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,6 +47,7 @@ class SignInMenu extends StatelessWidget {
             height: 60,
             width: MediaQuery.of(context).size.width - 50,
             child: TextField(
+              controller: loginUsernameController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: 'Skype,phone or email',
@@ -111,7 +113,7 @@ class SignInMenu extends StatelessWidget {
                   child: Text(
                     'Next',
                   ),
-                  onPressed: () {controller.gotosignInEmailCode();},
+                  onPressed: () {controller.gotosignInEmailCode(loginUsernameController.value.text);},
                 ),
               ),
             ],
