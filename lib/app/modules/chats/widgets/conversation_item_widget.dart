@@ -5,6 +5,8 @@ import 'package:path/path.dart' as Path;
 
 import '../../../models/conversation_model.dart';
 import '../../../models/message_model.dart';
+
+import '../views/single _chat_screen.dart';
 import 'conversation_user_avatar_widget.dart';
 
 class ConversationItemWidget extends StatefulWidget {
@@ -57,13 +59,15 @@ class _ConversationItemWidgetState extends State<ConversationItemWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () =>  Navigator.pushNamed(context, routeName)
-      // ,
-          // navigateAndKeepStack(
-          // context,
-          // ChatScreen(
-          //   conversation: widget.conversation,
-          // ))
+      onTap: () =>
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(
+                conversation: widget.conversation,
+              ),
+            ),
+          ),
 
       child: Container(
        // height: SizeConfig.heightUnit * 12,

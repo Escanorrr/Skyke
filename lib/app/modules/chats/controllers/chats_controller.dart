@@ -84,15 +84,13 @@ class ChatsController extends GetxController {
   }
 
   //messages vars and methods
-  List<MessageModel> _conversationsMessagesList = [];
-  List<MessageModel> get conversationsMessagesList {
-    return _conversationsMessagesList;
-  }
+  var conversationsMessagesList = <MessageModel>[].obs;
+
 
   void updateConversationMessages(List<MessageModel> newMessages) {
-    _conversationsMessagesList = newMessages;
+    conversationsMessagesList.value = newMessages;
     //replace notifyListeners();
-    update();
+
 
   }
 
@@ -199,6 +197,11 @@ class ChatsController extends GetxController {
     //replace notifyListeners();
     clearAttachment();
 
+  }
+  String? getOtherUserId(List? chatters) {
+    int i = chatters!.indexOf("user1");
+    String otherUserId = chatters[i == 0 ? 1 : 0];
+    return otherUserId;
   }
   // Future<void> sendAttachment(BuildContext context, String conversationId, Timestamp currentTime, String type, Function(String url) onSend) async {
   //   dio.FormData formData = dio.FormData.fromMap({
